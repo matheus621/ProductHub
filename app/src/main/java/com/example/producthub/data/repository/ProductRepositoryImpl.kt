@@ -32,9 +32,9 @@ class ProductRepositoryImpl @Inject constructor(
         dao.insertProduct(created.toEntity())
     }
 
-    override suspend fun addAllProducts(product: Product) {
-        val created = api.createProduct(product)
-        dao.insertAllProducts(listOf(created.toEntity()))
+    override suspend fun addAllProducts(products: List<Product>) {
+        val created = products.map { api.createProduct(it).toEntity() }
+        dao.insertAllProducts(created)
     }
 
     override suspend fun updateProduct(product: Product) {
